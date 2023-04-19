@@ -27,6 +27,12 @@ const uiElement: MenuItem = {
           url: '/advance/dialog',
         },
         {
+          id: 'toggle-button',
+          title: 'Toggle Button',
+          type: 'item',
+          url: '/advance/toggle-button',
+        },
+        {
           id: 'uploader',
           title: 'Uploader',
           type: 'item',

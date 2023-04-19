@@ -7,6 +7,7 @@ import Home from '@pages/Home';
 import Advance from '@pages/UIAdvance';
 import Alert from '@pages/UIAdvance/Alert';
 import Dialog from '@pages/UIAdvance/Dialog';
+import ToggleButton from '@pages/UIAdvance/ToggleButton';
 import Uploader from '@pages/UIAdvance/Uploader';
 import UIBasic from '@pages/UIBasic';
 import Progress from '@pages/UIBasic/Progress';
@@ -73,6 +74,10 @@ const MainRoutes: RouteObject = {
         {
           path: 'dialog',
           element: <Dialog />,
+        },
+        {
+          path: 'toggle-button',
+          element: <ToggleButton />,
         },
         {
           path: 'alert',
