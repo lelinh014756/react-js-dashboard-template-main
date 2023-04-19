@@ -43,14 +43,14 @@ const SubCard = forwardRef(
         {/* card header and action */}
         {!darkTitle && title !== undefined && (
           <CardHeader
-            sx={{ p: 2.5 }}
+            sx={{ p: theme.mixins.spacingResponsive1 }}
             title={<Typography variant="h5">{title}</Typography>}
             action={secondary}
           />
         )}
         {darkTitle && title !== undefined && (
           <CardHeader
-            sx={{ p: 2.5 }}
+            sx={{ p: theme.mixins.spacingResponsive1 }}
             title={<Typography variant="h4">{title}</Typography>}
             action={secondary}
           />
@@ -69,7 +69,10 @@ const SubCard = forwardRef(
         {/* card content */}
         {content && (
           <CardContent
-            sx={{ p: 2.5, ...contentSX }}
+            sx={{
+              p: theme.mixins.spacingResponsive1,
+              ...contentSX,
+            }}
             className={contentClass ?? ''}
           >
             {children}

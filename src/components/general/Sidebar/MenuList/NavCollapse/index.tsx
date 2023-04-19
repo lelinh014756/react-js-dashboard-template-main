@@ -13,7 +13,8 @@ import {
 } from '@mui/material';
 import { useAppSelector } from '@redux/hook';
 import { borderRadius, opened } from '@redux/selector/customizationSelector';
-import React, { memo, type MouseEvent, useState } from 'react';
+import React, { memo, type MouseEvent, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useLocation } from 'react-router-dom';
 import { type NavCollapseProps } from 'types/layoutType';
 
@@ -40,7 +41,10 @@ function NavCollapse({ menu, level }: NavCollapseProps) {
   const [open, setOpen] = useState(false);
   const [openPopper, setOpenPopper] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
-  const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+  //   const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+
+  const anchorRef = useRef(null);
+  const memoPathname = useRef(pathname);
 
   // --- utils constant --- //
   const upMdDrawerClose = matchUpMd && !drawerOpened; // Check menu đã đóng với screen > md
@@ -64,19 +68,26 @@ function NavCollapse({ menu, level }: NavCollapseProps) {
   };
 
   const handleMouse = (event: MouseEvent<HTMLDivElement>) => {
-    if (upMdDrawerClose) {
+    if (upMdDrawerClose && !isMobile) {
       event.stopPropagation();
-      setAnchorEl(event.currentTarget);
 
-      setOpenPopper(true);
+      //   setAnchorEl(event.currentTarget);
+      if (!openPopper) {
+        setOpenPopper(true);
+      }
     }
   };
 
-  React.useEffect(() => {
-    const currentIndex = pathname
+  const findCurrIndex = (val: string) => {
+    return val
       .toString()
       .split('/')
       .findIndex((id) => id === menu.id);
+  };
+
+  // *** Automatically enable collapse to match the page url
+  React.useEffect(() => {
+    const currentIndex = findCurrIndex(pathname);
     if (currentIndex > -1) {
       setSelected(menu.id);
       setOpen(true);
@@ -87,6 +98,33 @@ function NavCollapse({ menu, level }: NavCollapseProps) {
       if (selected != null) {
         setSelected(null);
       }
+    }
+  }, [pathname]);
+
+  // *** Close all collapses whose id is not the same as the pathname when closing the menu
+  React.useEffect(() => {
+    const currentIndex = findCurrIndex(pathname);
+
+    if (upMdDrawerClose) {
+      if (currentIndex < 0 && open) {
+        setSelected(null);
+        setOpen(false);
+      }
+      if (currentIndex > -1 && !open) {
+        setSelected(menu.id);
+        setOpen(true);
+      }
+    }
+  }, [upMdDrawerClose]);
+
+  // *** Action to turn off popper when item is clicked, apply to tablet
+  React.useEffect(() => {
+    if (pathname !== memoPathname.current) {
+      if (level === 1 && openPopper && isMobile) {
+        setOpenPopper(false);
+      }
+
+      memoPathname.current = pathname;
     }
   }, [pathname]);
 
@@ -102,6 +140,7 @@ function NavCollapse({ menu, level }: NavCollapseProps) {
             closed: upMdDrawerClose,
           }),
         }}
+        ref={anchorRef}
         disableTouchRipple={upMdDrawerClose && level < 2}
         selected={isSelected && !upMdDrawerClose}
         onClick={handleClick}
@@ -167,7 +206,7 @@ function NavCollapse({ menu, level }: NavCollapseProps) {
         {upMdDrawerClose && (
           <Popper
             open={openPopper}
-            anchorEl={anchorEl}
+            anchorEl={anchorRef.current}
             placement="right-start"
             sx={{
               zIndex: 1201,

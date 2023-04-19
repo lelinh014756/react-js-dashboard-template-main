@@ -1,16 +1,9 @@
 import { type ThemeOptions } from '@mui/material/styles';
 import { type CustomizationStore } from '@redux/slice/customizationSlice';
-import config from '@shared/configs/themeConfig';
-import {
-  matchUpMd,
-  matchUpSm,
-  mobileSpacing,
-  pcSpacing,
-  tabletSpacing,
-} from '@shared/constant';
 // assets
 import colors from '@styles/sass/abstracts/_variables.module.scss';
 
+import themeMixins from './mixins';
 // project imports
 import themePalette from './palette';
 import { type ThemeColorCustomization, type ThemeOptionCustom } from './type';
@@ -43,20 +36,7 @@ export const themeOptions = (customization: CustomizationStore) => {
   const themeConfig: ThemeOptions = {
     direction: 'ltr',
     palette: themePalette(themeOption),
-    mixins: {
-      toolbar: {
-        minHeight: '48px',
-        height: config.toolbarHeightSm,
-        padding: `${mobileSpacing}px`,
-        [matchUpSm]: {
-          padding: `${tabletSpacing}px`,
-          height: config.toolbarHeightLg,
-        },
-        [matchUpMd]: {
-          paddingInline: `${pcSpacing}px`,
-        },
-      },
-    },
+    mixins: themeMixins,
     shape: {
       borderRadius: customization.borderRadius,
     },

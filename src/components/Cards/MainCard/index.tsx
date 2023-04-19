@@ -56,9 +56,7 @@ const MainCard = forwardRef(
               : 'inherit',
           },
           '& .MuiCardHeader-root, & .MuiCardContent-root': {
-            [theme.breakpoints.up('lg')]: {
-              p: theme.spacing(3),
-            },
+            p: theme.mixins.spacingResponsive1,
           },
           ...sx,
         }}

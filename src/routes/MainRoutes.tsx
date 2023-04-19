@@ -1,3 +1,4 @@
+import Loadable from '@components/Loader/Loadable';
 import MainLayout from '@layouts/MainLayout';
 import ComponentsUI from '@pages/ComponentsUI';
 import Autocomplete from '@pages/ComponentsUI/Autocomplete';
@@ -11,8 +12,15 @@ import UIBasic from '@pages/UIBasic';
 import Progress from '@pages/UIBasic/Progress';
 import User from '@pages/User';
 import List from '@pages/User/List';
-import ListStyle1 from '@pages/User/List/ListStyle1';
+// import ListStyle1 from '@pages/User/List/ListStyle1';
+import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
+
+// lazy import
+const ListStyle1 = Loadable(
+  lazy(async () => import('@pages/User/List/ListStyle1')),
+  <>Loading...</>
+);
 
 const MainRoutes: RouteObject = {
   path: '/',

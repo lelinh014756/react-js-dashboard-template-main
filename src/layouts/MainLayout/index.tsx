@@ -67,8 +67,6 @@ function MainLayout() {
     dispatch(setMenu(!leftDrawerOpened));
   };
 
-  console.log('run layout');
-
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />

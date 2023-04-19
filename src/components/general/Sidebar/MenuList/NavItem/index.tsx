@@ -89,7 +89,8 @@ const NavItem = ({ item, level }: NavItemProps) => {
 
   const itemHandler = (id: string) => {
     dispatch(menuOpen(id));
-    if (matchesSM) dispatch(setMenu(false));
+
+    if (matchesSM && !upMdDrawerClose) dispatch(setMenu(!drawerOpen));
   };
 
   // active menu item on page load
@@ -123,6 +124,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
       selected={navIsActive && !upMdDrawerClose}
       onClick={(e) => {
         e.stopPropagation();
+
         itemHandler(item.id);
       }}
       disableTouchRipple={upMdDrawerClose && level < 2}

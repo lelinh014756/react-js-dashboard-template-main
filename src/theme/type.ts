@@ -1,3 +1,4 @@
+import { type Mixins } from '@mui/material/styles/createMixins';
 import { type Typography } from '@mui/material/styles/createTypography';
 import { type CustomizationStore } from '@redux/slice/customizationSlice';
 
@@ -159,6 +160,12 @@ export interface PaletteOptionsCustomization {
   };
 }
 // end customization palette
+
+// customization mixin
+export interface MixinsOptionsCustomization extends Mixins {
+  spacingResponsive1: Record<string, string | number>;
+}
+// end customization mixin
 
 // customization typography
 export interface TypographyOptionsCustomization extends Typography {

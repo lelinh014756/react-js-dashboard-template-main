@@ -9,26 +9,37 @@ import {
   TablePagination,
   Tooltip,
 } from '@mui/material';
+import useTablePage from '@shared/hooks/useTablePage';
+import useTableSelect from '@shared/hooks/useTableSelect';
 import { type Order } from '@shared/utils/handlerComparator';
+import EnhancedTableHead from '@views/user/list/listStyle1/EnhancedTableHead';
 import TableBodyView from '@views/user/list/listStyle1/TableBodyView';
 import React, { useState } from 'react';
 
-import { rows } from './data/listData1';
-import EnhancedTableHead from './EnhancedTableHead';
-import { type ListStyle1Data } from './type';
+import { rows } from '../data/listData1';
+import { type ListStyle1Data } from '../type';
 
 function ListStyle1() {
   const [searchText, setSearchText] = useState('');
 
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof ListStyle1Data>('Id');
-  const [page, setPage] = React.useState(0);
 
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  // use hook
+  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
+    useTablePage({
+      perPage: 8,
+    });
 
-  const numSelected = selected.length > 0;
+  const {
+    numSelected,
+    selected,
+    isSelected,
+    handleClick,
+    handleSelectAllClick,
+  } = useTableSelect<ListStyle1Data>(rows, 'Id');
 
+  // function
   const handleRequestSort = (
     _event: React.MouseEvent<unknown>,
     property: keyof ListStyle1Data
@@ -37,48 +48,6 @@ function ListStyle1() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.Id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (_event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: readonly string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const isSelected = (name: string) => selected.includes(name);
 
   return (
     <MainCard
