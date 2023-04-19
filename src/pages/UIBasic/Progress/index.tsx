@@ -11,17 +11,17 @@ const Progress = () => {
   return (
     <MainCard title="Progress Bar">
       <Grid container spacing={gridSpacing}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} lg={4} xl={3}>
           <SubCard title="Circle progress base">
             <ProgressCircleBase />
           </SubCard>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} lg={4} xl={3}>
           <SubCard title="Circle progress determinate">
             <ProgressCircleDeterminate />
           </SubCard>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={6} lg={4} xl={3}>
           <SubCard title="Circle progress with label">
             <ProgressCircleWithLabelView />
           </SubCard>
