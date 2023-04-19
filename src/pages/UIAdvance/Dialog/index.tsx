@@ -9,7 +9,7 @@ function Dialog() {
   return (
     <MainCard title="Dialog">
       <Grid container spacing={gridSpacing}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={6} lg={4} xl={3}>
           <SubCard title="Alert Dialog" contentSX={{ textAlign: 'center' }}>
             <AlertDialogView />
           </SubCard>
