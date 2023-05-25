@@ -20,6 +20,12 @@ const forms: MenuItem = {
           url: '/components/select',
         },
         {
+          id: 'button',
+          title: 'Button',
+          type: 'item',
+          url: '/components/button',
+        },
+        {
           id: 'autocomplete',
           title: 'Autocomplete',
           type: 'item',

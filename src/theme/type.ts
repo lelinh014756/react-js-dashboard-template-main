@@ -217,7 +217,6 @@ export interface TypographyOptionsCustomization extends Typography {
   };
   commonAvatar: {
     cursor: string;
-    borderRadius: string;
   };
   smallAvatar: {
     width: string;

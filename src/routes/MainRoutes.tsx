@@ -1,8 +1,5 @@
 import Loadable from '@components/Loader/Loadable';
 import MainLayout from '@layouts/MainLayout';
-import ComponentsUI from '@pages/ComponentsUI';
-import Autocomplete from '@pages/ComponentsUI/Autocomplete';
-import Select from '@pages/ComponentsUI/Select';
 import Home from '@pages/Home';
 import Advance from '@pages/UIAdvance';
 import Alert from '@pages/UIAdvance/Alert';
@@ -16,6 +13,8 @@ import List from '@pages/User/List';
 // import ListStyle1 from '@pages/User/List/ListStyle1';
 import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
+
+import ComponentsRoute from './childRoute/ComponentsRoute';
 
 // lazy import
 const ListStyle1 = Loadable(
@@ -49,20 +48,7 @@ const MainRoutes: RouteObject = {
         },
       ],
     },
-    {
-      path: 'components',
-      element: <ComponentsUI />,
-      children: [
-        {
-          path: 'select',
-          element: <Select />,
-        },
-        {
-          path: 'autocomplete',
-          element: <Autocomplete />,
-        },
-      ],
-    },
+    ComponentsRoute,
     {
       path: 'advance',
       element: <Advance />,

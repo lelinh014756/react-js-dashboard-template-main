@@ -135,7 +135,6 @@ export default function themeTypography(theme: Theme): TypographyCustomization {
     },
     commonAvatar: {
       cursor: 'pointer',
-      borderRadius: '8px',
     },
     smallAvatar: {
       width: '22px',

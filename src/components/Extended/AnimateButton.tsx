@@ -97,7 +97,7 @@ const AnimateButton: ForwardRefRenderFunction<DivRef, AnimateButtonProps> = (
       if (typeof scale === 'number') {
         Object.assign(scaleVal, {
           hover: scale,
-          tap: scale,
+          tap: scale === 1 ? 0.9 : 1,
         });
       } else {
         const { hover = 1, tap = 0.9 } = scale ?? {};

@@ -3,7 +3,7 @@ import type { Theme } from '@mui/material/styles';
 
 // ** Theme Config Imports
 
-const Button = (_theme: Theme) => {
+const Button = (theme: Theme) => {
   return {
     MuiButton: {
       styleOverrides: {
@@ -12,6 +12,28 @@ const Button = (_theme: Theme) => {
           borderRadius: '4px',
         },
       },
+      variants: [
+        {
+          props: { variant: 'contained', color: 'success' },
+          style: {
+            color: '#fff',
+            backgroundColor: theme.palette.success.dark,
+            '&:hover': {
+              backgroundColor: theme.palette.success.main,
+            },
+          },
+        },
+        {
+          props: { variant: 'contained', color: 'warning' },
+          style: {
+            color: '#fff',
+            backgroundColor: theme.palette.warning.dark,
+            '&:hover': {
+              backgroundColor: theme.palette.warning.main,
+            },
+          },
+        },
+      ],
     },
   };
 };

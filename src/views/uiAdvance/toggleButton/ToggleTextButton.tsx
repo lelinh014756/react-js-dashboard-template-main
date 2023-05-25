@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
-import React, { memo, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 
-interface ToggleVal {
+export interface ToggleVal {
   label: string;
   value: string;
 }
@@ -11,6 +11,7 @@ interface Props {
   toggleList: ToggleVal[];
   initialVal?: ToggleVal;
   initialIndex?: 1 | 2;
+  onChange?: (val: ToggleVal) => void;
 }
 
 const ToggleTextButton = ({
@@ -18,10 +19,13 @@ const ToggleTextButton = ({
   toggleList,
   initialVal,
   initialIndex = 1,
+  onChange,
 }: Props) => {
   const [valChecked, setValChecked] = useState(
-    initialVal ?? toggleList[--initialIndex]
+    initialVal ?? toggleList[initialIndex - 1]
   );
+
+  const memoRef = useRef(valChecked);
 
   if (typeof buttonSize === 'number') {
     buttonSize = String(buttonSize) + 'px';
@@ -30,6 +34,18 @@ const ToggleTextButton = ({
   const widthBox = `calc(${buttonSize} / 2)`;
   const IS_FIRST_CHECKED = valChecked?.value === toggleList[0]?.value;
   const IS_WIDTH_PERCENT = buttonSize.includes('%');
+
+  const handleClick = (val: ToggleVal) => {
+    const memoVal = memoRef.current?.value;
+
+    setValChecked(val);
+
+    if (memoVal !== val.value) {
+      memoRef.current = val;
+
+      onChange?.(val);
+    }
+  };
 
   return (
     <div>
@@ -68,7 +84,7 @@ const ToggleTextButton = ({
                   : theme.palette.primary.main,
             })}
             onClick={() => {
-              setValChecked(item);
+              handleClick(item);
             }}
           >
             {item.label}
