@@ -14,12 +14,6 @@ const forms: MenuItem = {
       icon: IconPictureInPicture,
       children: [
         {
-          id: 'select',
-          title: 'Select',
-          type: 'item',
-          url: '/components/select',
-        },
-        {
           id: 'button',
           title: 'Button',
           type: 'item',
@@ -30,6 +24,24 @@ const forms: MenuItem = {
           title: 'Autocomplete',
           type: 'item',
           url: '/components/autocomplete',
+        },
+        {
+          id: 'checkbox',
+          title: 'Checkbox',
+          type: 'item',
+          url: '/components/checkbox',
+        },
+        {
+          id: 'date-time',
+          title: 'Date & Time',
+          type: 'item',
+          url: '/components/date-time',
+        },
+        {
+          id: 'select',
+          title: 'Select',
+          type: 'item',
+          url: '/components/select',
         },
       ],
     },

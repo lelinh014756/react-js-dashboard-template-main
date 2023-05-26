@@ -1,6 +1,8 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Check } from '@mui/icons-material';
+import { Autocomplete, MenuItem, Stack, TextField } from '@mui/material';
 import React from 'react';
 
+import { selectChipList } from '../select/data';
 import { type SelectItem } from '../type';
 
 export type ChangeFn = (
@@ -9,20 +11,14 @@ export type ChangeFn = (
 ) => void;
 
 export interface MultipleOptionsProps {
-  options: SelectItem[];
   isFilter?: boolean;
   id?: string;
-  placeholder?: string;
-  label?: string;
   onChange?: ChangeFn;
 }
 
 const MultipleOptions = ({
-  options,
   id,
   isFilter = true,
-  placeholder,
-  label,
   onChange,
 }: MultipleOptionsProps) => {
   const handleChange = (
@@ -35,30 +31,65 @@ const MultipleOptions = ({
     console.log(obj);
   };
 
+  const defaultValue = [selectChipList[1]] as SelectItem[];
+
+  const defaultValue2 = selectChipList.filter(
+    (_item, index) => index > 2 && index < 6
+  );
+
   return (
-    <Autocomplete
-      multiple
-      id={id}
-      options={options}
-      getOptionLabel={(option) => option.label}
-      limitTags={2}
-      filterSelectedOptions={isFilter}
-      onChange={handleChange}
-      renderInput={(params) => (
-        <TextField {...params} label={label} placeholder={placeholder} />
-      )}
-      //   renderOption={(props, option, { selected }) => (
-      //     <MenuItem
-      //       {...props}
-      //       key={option.value}
-      //       value={option.value}
-      //       sx={{ justifyContent: 'space-between' }}
-      //     >
-      //       {option.label}
-      //       {selected ? <CheckIcon color="info" /> : null}
-      //     </MenuItem>
-      //   )}
-    />
+    <Stack spacing={3}>
+      <Autocomplete
+        multiple
+        id={id}
+        options={selectChipList}
+        getOptionLabel={(option) => option.label}
+        filterSelectedOptions={isFilter}
+        onChange={handleChange}
+        renderInput={(params) => (
+          <TextField {...params} label="multiple options" />
+        )}
+      />
+      <Autocomplete
+        multiple
+        id={id}
+        options={selectChipList}
+        getOptionLabel={(option) => option.label}
+        onChange={handleChange}
+        disableCloseOnSelect
+        defaultValue={defaultValue}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="custom item checked"
+            placeholder="Favorites"
+          />
+        )}
+        renderOption={(props, option, { selected }) => (
+          <MenuItem
+            key={option.value}
+            value={option.value}
+            sx={{ justifyContent: 'space-between !important' }}
+            {...props}
+          >
+            {option.label}
+            {selected ? <Check color="success" /> : null}
+          </MenuItem>
+        )}
+      />
+      <Autocomplete
+        multiple
+        id={id}
+        options={selectChipList}
+        getOptionLabel={(option) => option.label}
+        limitTags={1}
+        onChange={handleChange}
+        defaultValue={defaultValue2}
+        renderInput={(params) => (
+          <TextField {...params} label="limit tags" placeholder="Favorites" />
+        )}
+      />
+    </Stack>
   );
 };
 

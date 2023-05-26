@@ -22,12 +22,12 @@ export interface Props {
   orderBy: keyof ListStyle1Data;
   page: number;
   rowsPerPage: number;
-  isSelected: (name: string) => boolean;
+  isChecked: (name: string) => boolean;
   handleClick: (event: React.MouseEvent<unknown>, name: string) => void;
 }
 
 function TableBodyView(props: Props) {
-  const { rows, rowsPerPage, order, orderBy, page, isSelected, handleClick } =
+  const { rows, rowsPerPage, order, orderBy, page, isChecked, handleClick } =
     props;
 
   const theme = useTheme();
@@ -37,7 +37,7 @@ function TableBodyView(props: Props) {
       {stableSort(rows, getComparator<ListStyle1Data>(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map((row, index) => {
-          const isItemSelected = isSelected(row.Id);
+          const isItemSelected = isChecked(row.Id);
           const labelId = `enhanced-table-checkbox-${index}`;
 
           return (

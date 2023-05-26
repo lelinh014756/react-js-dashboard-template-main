@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useState } from 'react';
 
-function useTableSelect<DataTableBody>(rows: DataTableBody[], key: string) {
+function useIndeterminateCheckbox<DataTableBody>(
+  rows: DataTableBody[],
+  key: string
+) {
   const [selected, setSelected] = useState<readonly string[]>([]);
 
-  const numSelected = selected.length > 0;
+  const isSelected = selected.length > 0;
 
-  const isSelected = (name: string) => selected.includes(name);
+  const isChecked = (name: string) => selected.includes(name);
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -43,12 +46,12 @@ function useTableSelect<DataTableBody>(rows: DataTableBody[], key: string) {
 
   return {
     selected,
-    numSelected,
     isSelected,
+    isChecked,
     handleClick,
     handleSelectAllClick,
     resetSelected,
   };
 }
 
-export default useTableSelect;
+export default useIndeterminateCheckbox;

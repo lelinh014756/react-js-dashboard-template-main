@@ -13,7 +13,7 @@ import { type Order } from '@shared/utils/handlerComparator';
 import React from 'react';
 
 export interface EnhancedTableProps {
-  numSelected: number;
+  selectedLength: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
     property: keyof ListStyle1Data
@@ -29,7 +29,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     onSelectAllClick,
     order,
     orderBy,
-    numSelected,
+    selectedLength,
     rowCount,
     onRequestSort,
   } = props;
@@ -44,8 +44,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
+            indeterminate={selectedLength > 0 && selectedLength < rowCount}
+            checked={rowCount > 0 && selectedLength === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
               'aria-label': 'select all desserts',

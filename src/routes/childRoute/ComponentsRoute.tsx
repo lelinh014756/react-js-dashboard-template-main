@@ -1,6 +1,8 @@
 import Loadable from '@components/Loader/Loadable';
 import SkeletonCardContent1 from '@components/Skeleton/SkeletonCardContent1';
 import ComponentsUI from '@pages/ComponentsUI';
+import CheckBox from '@pages/ComponentsUI/CheckBox';
+import DateTime from '@pages/ComponentsUI/DateTime';
 import { lazy } from 'react';
 import { type RouteObject } from 'react-router-dom';
 
@@ -29,6 +31,14 @@ const ComponentsRoute: RouteObject = {
     {
       path: 'button',
       element: <Button />,
+    },
+    {
+      path: 'checkbox',
+      element: <CheckBox />,
+    },
+    {
+      path: 'date-time',
+      element: <DateTime />,
     },
     {
       path: 'select',

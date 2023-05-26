@@ -9,8 +9,8 @@ import {
   TablePagination,
   Tooltip,
 } from '@mui/material';
+import useIndeterminateCheckbox from '@shared/hooks/useIndeterminateCheckbox';
 import useTablePage from '@shared/hooks/useTablePage';
-import useTableSelect from '@shared/hooks/useTableSelect';
 import { type Order } from '@shared/utils/handlerComparator';
 import EnhancedTableHead from '@views/user/list/listStyle1/EnhancedTableHead';
 import TableBodyView from '@views/user/list/listStyle1/TableBodyView';
@@ -31,13 +31,8 @@ function ListStyle1() {
       perPage: 8,
     });
 
-  const {
-    numSelected,
-    selected,
-    isSelected,
-    handleClick,
-    handleSelectAllClick,
-  } = useTableSelect<ListStyle1Data>(rows, 'Id');
+  const { isSelected, selected, isChecked, handleClick, handleSelectAllClick } =
+    useIndeterminateCheckbox<ListStyle1Data>(rows, 'Id');
 
   // function
   const handleRequestSort = (
@@ -51,18 +46,18 @@ function ListStyle1() {
 
   return (
     <MainCard
-      title={numSelected ? `${selected.length} selected` : 'List'}
+      title={isSelected ? `${selected.length} selected` : 'List'}
       headerSX={{
-        ...(numSelected && {
+        ...(isSelected && {
           backgroundColor: '#eef7fe',
         }),
       }}
-      customTitle={numSelected}
+      customTitle={isSelected}
       customTitleVariant="h6"
       customTitleSx={{ fontSize: 16, fontWeight: 400 }}
       contentSX={{ padding: 0 }}
       secondary={
-        numSelected ? (
+        isSelected ? (
           <Tooltip title="Delete">
             <IconButton>
               <DeleteTwoTone fontSize="small" />
@@ -86,7 +81,7 @@ function ListStyle1() {
         <TableContainer>
           <Table aria-labelledby="tableTitle">
             <EnhancedTableHead
-              numSelected={selected.length}
+              selectedLength={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
@@ -99,7 +94,7 @@ function ListStyle1() {
               order={order}
               orderBy={orderBy}
               handleClick={handleClick}
-              isSelected={isSelected}
+              isChecked={isChecked}
               page={page}
             />
           </Table>
